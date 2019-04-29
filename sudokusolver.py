@@ -205,6 +205,8 @@ if sudokucheck(sudokuboard) == False:
 else:
     pass
 
+
+
 # This is a list of elements initially in each row.
 initial_row_entries = []
 
@@ -220,6 +222,8 @@ for row in sudokuboard:
             initial.append(row[i])
 
     initial_row_entries.append(initial)
+
+
 
 # This creates a list of elements initially missing in each row.
 initial_row_missing = []
@@ -237,52 +241,9 @@ for list in initial_row_entries:
 
     initial_row_missing.append(missing)
 
+
+
+
 # Next we obtain the list of allowed entries at EACH point in the table. This
 # will be a sublist (at each point) of initial_row_missing, as some of
 # those values may return invalid boards.
-
-grid13 = []
-
-for i in initial_row_missing[0]:
-
-    newsudokuboard = sudokuboard
-    newsudokuboard[0][2] = i
-
-    if sudokucheck(newsudokuboard) == True:
-        grid13.append(i)
-    else:
-        pass
-print initial_row_missing[0]
-print grid13
-
-
-
-
-
-
-
-
-
-
-
-# # Define a new board so we can adjust it and still retain the original
-# nrow1 = row1
-# nrow2 = row2
-# nrow3 = row3
-# nrow4 = row4
-# nrow5 = row5
-# nrow6 = row6
-# nrow7 = row7
-# nrow8 = row8
-# nrow9 = row9
-#
-# newboard = [nrow1,
-#              nrow2,
-#              nrow3,
-#              nrow4,
-#              nrow5,
-#              nrow6,
-#              nrow7,
-#              nrow8,
-#              nrow9
-#              ]
