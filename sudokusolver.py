@@ -1,10 +1,10 @@
+import timeit
 # Goal: write a script that solves a given sudoku board.
 
 # This code will require the sudoku checker function
 def sudokucheck(board): # board is a list of lists each with nine entries
 
     # First we have the function check whether the rows are valid.
-
     for row in board:
 
         for i in range(0,len(row)):
@@ -378,7 +378,7 @@ def print_sudoku(board):
     return ' \n '
 
 #
-# This board can be solved without branching.
+# The following boards can be solved without branching.
 #
 
 row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
@@ -392,6 +392,18 @@ row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
 row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
 row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
 row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
+
+# row1 = ['3', '2', '8',    '.', '7', '.',    '.', '1', '5']
+# row2 = ['.', '7', '6',    '.', '.', '.',    '8', '9', '3']
+# row3 = ['4', '.', '.',    '1', '.', '.',    '.', '6', '.']
+#
+# row4 = ['5', '.', '.',    '3', '.', '.',    '.', '7', '.']
+# row5 = ['.', '.', '.',    '8', '1', '.',    '6', '3', '.']
+# row6 = ['6', '.', '.',    '.', '4', '.',    '9', '.', '.']
+#
+# row7 = ['.', '6', '2',    '5', '9', '7',    '.', '.', '.']
+# row8 = ['9', '.', '.',    '.', '3', '.',    '7', '.', '.']
+# row9 = ['7', '4', '3',    '.', '2', '1',    '.', '8', '.']
 
 
 #
@@ -411,6 +423,8 @@ row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
 # row9 = ['.', '4', '.',    '.', '7', '.',    '8', '.', '.']
 
 
+
+
 sudokuboard = [row1,
                row2,
                row3,
@@ -424,6 +438,8 @@ sudokuboard = [row1,
 
 # Print the board
 print print_sudoku(sudokuboard)
+
+start = timeit.default_timer()
 
 # Before we get started, we should check whether the given board is valid.
 if sudokucheck(sudokuboard) == False:
@@ -500,8 +516,6 @@ def sudoku_array_allowed(board):
             # If i,j is empty, then try elements missing from row.
             if board[i][j] == '.':
 
-                # PROBLEM! initial_row_missing is a global variable.
-
                 for x in initial_row_missing[i]:
                     board[i][j] = x
                     if sudokucheck(board) == True:
@@ -558,10 +572,11 @@ while one_option == True:
     else:
         one_option = False
 
+stop = timeit.default_timer()
 print "\n Abracadabra \n"
 
 print print_sudoku(sudokuboard)
-
+print 'Time: ', stop - start, 'seconds'
 # Conceivably, this could solve the sudoku. However, in general, this will not
 # be enough to fill the board completely. We will require some branching
 # procedure to follow different choices until an error occurs.
