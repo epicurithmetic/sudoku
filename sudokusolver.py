@@ -451,29 +451,123 @@ print initial_row_missing
 # will be a sublist (at each point) of initial_row_missing, as some of
 # those values may return invalid boards.
 
-array_allowed_entries = []
+# array_allowed_entries = []
+#
+# # Index over the rows of the board:
+# for i in range(0,9):
+#
+#     row_allowed_entries = []
+#
+#     # Index over the elements of the row
+#     for j in range(0,9):
+#         local_allowed_entries = []
+#         if sudokuboard[i][j] == '.':
+#
+#             for x in initial_row_missing[i]:
+#                 sudokuboard[i][j] = x
+#                 if sudokucheck(sudokuboard) == True:
+#                     local_allowed_entries.append(x)
+#                 else:
+#                     pass
+#                 sudokuboard[i][j] = '.'
+#         else:
+#             pass
+#
+#         row_allowed_entries.append(local_allowed_entries)
+#
+#     array_allowed_entries.append(row_allowed_entries)
 
-# Index over the rows of the board:
-for i in range(0,9):
 
-    # Index over the elements of the row
-    for j in range(0,9):
-        local_allowed_entries = []
-        if sudokuboard[i][j] == '.':
+# Package this code into a function which outputs the array of allowed entries
+def sudoku_array_allowed(board):
 
-            for x in initial_row_missing[i]:
-                sudokuboard[i][j] = x
-                if sudokucheck(sudokuboard) == True:
-                    local_allowed_entries.append(x)
-                else:
-                    pass
-                sudokuboard[i][j] = '.'
-        else:
-            pass
-            #local_allowed_entries.append(sudokuboard[i][j])
+    """
+        Given a sudoku board --- in the form of a list of 9 element lists --- this
+        function will return an array indexed by row (i) and column(j) of allowed
+        numbers at each entry of the sudoku board.
 
-        array_allowed_entries.append(local_allowed_entries)
+        To be precise; the output is a list of nine lists --- the list of rows.
+        Each element in a row is a list of allowed entries at the point of the
+        board.
+
+        Empty spots are to be entered as the string '.'
+
+        If the board already has an entry, then the allowed entries will be
+        an empty list at that index.
+
+    """
+
+    array_allowed_entries = []
+
+    # Index over the rows of the board:
+    for i in range(0,9):
+
+        row_allowed_entries = []
+
+        # Index over the elements of the row
+        for j in range(0,9):
+            local_allowed_entries = []
+            if board[i][j] == '.':
+
+                for x in initial_row_missing[i]:
+                    board[i][j] = x
+                    if sudokucheck(board) == True:
+                        local_allowed_entries.append(x)
+                    else:
+                        pass
+                    board[i][j] = '.'
+            else:
+                pass
+
+            row_allowed_entries.append(local_allowed_entries)
+
+        array_allowed_entries.append(row_allowed_entries)
+
+    return array_allowed_entries
+
+array_allowed_entries = sudoku_array_allowed(sudokuboard)
+# As a first pass we might try and fill in all entries with only one possible
+# option. Run the sudoku_array_allowed function on the new board. Repeating
+# this until we have to make a choice about which element to put in a square.
+
+one_option = True
+
+while one_option == True:
+
+    # Index over rows
+    for i in range(0,9):
+
+        # Index over columns
+        for j in range(0,9):
+
+            if len(array_allowed_entries[i][j]) == 1:
+                sudokuboard[i][j] = array_allowed_entries[i][j][0]
+            else:
+                pass
+
+    # Is it still true that there is only one option?
+
+    # Recalculate the allowed entries on the new board
+    array_allowed_entries = sudoku_array_allowed(sudokuboard)
+
+    length_one = 0
+
+    for i in range(0,9):
+        for j in range(0,9):
+            if len(array_allowed_entries[i][j]) == 1:
+                length_one = 1
+            else:
+                pass
+
+    if length_one == 1:
+        pass
+    else:
+        one_option = False
+
+print print_sudoku(sudokuboard)
+print sudoku_array_allowed(sudokuboard)
 
 
-print '\n'
-print array_allowed_entries
+# Conceivably, this could solve the sudoku. However, in general, this will not
+# be enough to fill the board completely. We will require some branching
+# procedure to follow different choices until an error occurs.
