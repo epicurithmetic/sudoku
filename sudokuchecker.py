@@ -13,7 +13,7 @@ row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
 
 row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
 row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
-row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
+row9 = ['.', '.', '.',    '.', '8', '.',    '2', '7', '9']
 
 sudokuboard = [ row1,
                 row2,
@@ -87,12 +87,14 @@ def sudokucheck(board): # board is a list of lists each with nine entries
                     pass
 
                 else:
-                    for j in range(i+1,len(row)):
-
-                        if row[i] == row[j]:
+                    for j in range(0,len(row)):
+                        if i == j:
+                            pass
+                        elif row[i] == row[j]:
                             #print "Sudoku board not valid"
                             #print "Entries %d and %d in Row %s are equal" % (i+1,j+1,row)
                             #valid = False
+                            print i,j, 'row'
                             return False
                         else:
                             pass
@@ -155,11 +157,13 @@ def sudokucheck(board): # board is a list of lists each with nine entries
                         pass
 
                     else:
-                        for j in range(i+1,len(col)):
-
-                            if col[i] == col[j]:
+                        for j in range(0,len(col)):
+                            if i == j:
+                                pass
+                            elif col[i] == col[j]:
                                 #print "Sudoku board not valid"
                                 #print "Entries %d and %d in Column %s are equal" % (i+1,j+1,col)
+                                print i,j, 'col'
                                 return False
                             else:
                                 pass
@@ -235,14 +239,18 @@ def sudokucheck(board): # board is a list of lists each with nine entries
                         pass
 
                     else:
-                        for j in range(i+1,len(sq)):
-
-                            if sq[i] == sq[j]:
+                        for j in range(0,len(sq)):
+                            if i == j:
+                                pass
+                            elif sq[i] == sq[j]:
                                 #print "Sudoku board not valid"
                                 #print "Square %s has entries that are equal." % sq
+                                print sq
                                 return False
                             else:
                                 pass
 
         #print "True"
         return True
+
+print sudokucheck(sudokuboard)
