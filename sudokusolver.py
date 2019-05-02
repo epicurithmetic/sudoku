@@ -374,9 +374,12 @@ def print_sudoku(board):
     print ' %s | %s | %s || %s | %s | %s || %s | %s | %s ' % (board[6][0],board[6][1],board[6][2],board[6][3],board[6][4],board[6][5],board[6][6],board[6][7],board[6][8])
     print ' %s | %s | %s || %s | %s | %s || %s | %s | %s ' % (board[7][0],board[7][1],board[7][2],board[7][3],board[7][4],board[7][5],board[7][6],board[7][7],board[7][8])
     print ' %s | %s | %s || %s | %s | %s || %s | %s | %s ' % (board[8][0],board[8][1],board[8][2],board[8][3],board[8][4],board[8][5],board[8][6],board[8][7],board[8][8])
-    print ' \n '
 
-# The example board is from LeetCode.
+    return ' \n '
+
+#
+# This board can be solved without branching.
+#
 
 row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
 row2 = ['6', '.', '.',    '1', '9', '5',    '.', '.', '.']
@@ -389,6 +392,24 @@ row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
 row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
 row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
 row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
+
+
+#
+# This board requires some branching of options to solve.
+#
+
+# row1 = ['.', '7', '6',    '.', '.', '.',    '.', '3', '2']
+# row2 = ['2', '.', '8',    '.', '.', '5',    '.', '.', '.']
+# row3 = ['.', '.', '.',    '.', '.', '.',    '.', '.', '.']
+#
+# row4 = ['.', '.', '.',    '7', '6', '.',    '.', '.', '9']
+# row5 = ['.', '8', '.',    '.', '4', '2',    '.', '6', '.']
+# row6 = ['.', '.', '7',    '.', '9', '.',    '.', '.', '3']
+#
+# row7 = ['.', '2', '.',    '.', '.', '1',    '3', '7', '.']
+# row8 = ['.', '.', '.',    '.', '.', '.',    '.', '9', '1']
+# row9 = ['.', '4', '.',    '.', '7', '.',    '8', '.', '.']
+
 
 sudokuboard = [row1,
                row2,
@@ -411,74 +432,10 @@ if sudokucheck(sudokuboard) == False:
 else:
     pass
 
-
-
-# This is a list of elements initially in each row.
-initial_row_entries = []
-
-for row in sudokuboard:
-
-    initial = []
-
-    for i in range(0, len(row)):
-
-        if row[i] == '.':
-            pass
-        else:
-            initial.append(row[i])
-
-    initial_row_entries.append(initial)
-
-
-
-# This creates a list of elements initially missing in each row.
-initial_row_missing = []
-
-for list in initial_row_entries:
-    missing = []
-    for i in range(1,10):
-        if not(str(i) in list):
-            missing.append(str(i))
-        else:
-            pass
-    initial_row_missing.append(missing)
-
-
-print initial_row_missing
-
-
 # Next we obtain the list of allowed entries at EACH point in the table. This
 # will be a sublist (at each point) of initial_row_missing, as some of
 # those values may return invalid boards.
 
-# array_allowed_entries = []
-#
-# # Index over the rows of the board:
-# for i in range(0,9):
-#
-#     row_allowed_entries = []
-#
-#     # Index over the elements of the row
-#     for j in range(0,9):
-#         local_allowed_entries = []
-#         if sudokuboard[i][j] == '.':
-#
-#             for x in initial_row_missing[i]:
-#                 sudokuboard[i][j] = x
-#                 if sudokucheck(sudokuboard) == True:
-#                     local_allowed_entries.append(x)
-#                 else:
-#                     pass
-#                 sudokuboard[i][j] = '.'
-#         else:
-#             pass
-#
-#         row_allowed_entries.append(local_allowed_entries)
-#
-#     array_allowed_entries.append(row_allowed_entries)
-
-
-# Package this code into a function which outputs the array of allowed entries
 def sudoku_array_allowed(board):
 
     """
@@ -497,6 +454,36 @@ def sudoku_array_allowed(board):
 
     """
 
+    # This is a list of elements initially in each row.
+    initial_row_entries = []
+
+    for row in board:
+
+        initial = []
+
+        for i in range(0, len(row)):
+
+            if row[i] == '.':
+                pass
+            else:
+                initial.append(row[i])
+
+        initial_row_entries.append(initial)
+
+
+
+    # This creates a list of elements initially missing in each row.
+    initial_row_missing = []
+
+    for list in initial_row_entries:
+        missing = []
+        for i in range(1,10):
+            if not(str(i) in list):
+                missing.append(str(i))
+            else:
+                pass
+        initial_row_missing.append(missing)
+
     array_allowed_entries = []
 
     # Index over the rows of the board:
@@ -504,14 +491,21 @@ def sudoku_array_allowed(board):
 
         row_allowed_entries = []
 
-        # Index over the elements of the row
+        # Index over the elements of the row.
         for j in range(0,9):
+
+            # Create list of entries allowed at i,j.
             local_allowed_entries = []
+
+            # If i,j is empty, then try elements missing from row.
             if board[i][j] == '.':
+
+                # PROBLEM! initial_row_missing is a global variable.
 
                 for x in initial_row_missing[i]:
                     board[i][j] = x
                     if sudokucheck(board) == True:
+                        # Append the elements if they are allowed.
                         local_allowed_entries.append(x)
                     else:
                         pass
@@ -564,9 +558,9 @@ while one_option == True:
     else:
         one_option = False
 
-print print_sudoku(sudokuboard)
-print sudoku_array_allowed(sudokuboard)
+print "\n Abracadabra \n"
 
+print print_sudoku(sudokuboard)
 
 # Conceivably, this could solve the sudoku. However, in general, this will not
 # be enough to fill the board completely. We will require some branching
