@@ -381,17 +381,17 @@ def print_sudoku(board):
 # The following boards can be solved without branching.
 #
 
-row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
-row2 = ['6', '.', '.',    '1', '9', '5',    '.', '.', '.']
-row3 = ['.', '9', '8',    '.', '.', '.',    '.', '6', '.']
-
-row4 = ['8', '.', '.',    '.', '6', '.',    '.', '.', '3']
-row5 = ['4', '.', '.',    '8', '.', '3',    '.', '.', '1']
-row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
-
-row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
-row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
-row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
+# row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
+# row2 = ['6', '.', '.',    '1', '9', '5',    '.', '.', '.']
+# row3 = ['.', '9', '8',    '.', '.', '.',    '.', '6', '.']
+#
+# row4 = ['8', '.', '.',    '.', '6', '.',    '.', '.', '3']
+# row5 = ['4', '.', '.',    '8', '.', '3',    '.', '.', '1']
+# row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
+#
+# row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
+# row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
+# row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
 
 # row1 = ['3', '2', '8',    '.', '7', '.',    '.', '1', '5']
 # row2 = ['.', '7', '6',    '.', '.', '.',    '8', '9', '3']
@@ -407,8 +407,24 @@ row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
 
 
 #
-# This board requires some branching of options to solve.
+# These boards require some branching of options to solve.
 #
+
+# "Medium" sudoku puzzle.
+
+row1 = ['.', '.', '.',    '.', '.', '8',    '.', '3', '.']
+row2 = ['.', '.', '.',    '.', '.', '.',    '4', '.', '5']
+row3 = ['.', '.', '1',    '.', '.', '.',    '.', '7', '.']
+
+row4 = ['7', '3', '.',    '.', '.', '.',    '2', '8', '.']
+row5 = ['9', '5', '.',    '3', '.', '.',    '.', '.', '.']
+row6 = ['.', '.', '.',    '.', '.', '6',    '.', '.', '4']
+
+row7 = ['8', '.', '.',    '1', '4', '.',    '.', '.', '.']
+row8 = ['.', '.', '.',    '8', '7', '.',    '.', '1', '6']
+row9 = ['.', '.', '5',    '.', '.', '.',    '9', '.', '.']
+
+# "Hard" sudoku puzzle.
 
 # row1 = ['.', '7', '6',    '.', '.', '.',    '.', '3', '2']
 # row2 = ['2', '.', '8',    '.', '.', '5',    '.', '.', '.']
@@ -422,9 +438,7 @@ row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
 # row8 = ['.', '.', '.',    '.', '.', '.',    '.', '9', '1']
 # row9 = ['.', '4', '.',    '.', '7', '.',    '8', '.', '.']
 
-
-
-
+# Defines the board the script will solve.
 sudokuboard = [row1,
                row2,
                row3,
@@ -440,7 +454,6 @@ sudokuboard = [row1,
 print print_sudoku(sudokuboard)
 
 start = timeit.default_timer()
-
 # Before we get started, we should check whether the given board is valid.
 if sudokucheck(sudokuboard) == False:
     print "The board is not valid"
@@ -451,7 +464,6 @@ else:
 # Next we obtain the list of allowed entries at EACH point in the table. This
 # will be a sublist (at each point) of initial_row_missing, as some of
 # those values may return invalid boards.
-
 def sudoku_array_allowed(board):
 
     """
@@ -533,50 +545,72 @@ def sudoku_array_allowed(board):
 
     return array_allowed_entries
 
-array_allowed_entries = sudoku_array_allowed(sudokuboard)
+#array_allowed_entries = sudoku_array_allowed(sudokuboard)
+
 # As a first pass we might try and fill in all entries with only one possible
 # option. Run the sudoku_array_allowed function on the new board. Repeating
 # this until we have to make a choice about which element to put in a square.
 
-one_option = True
+def sudoku_oneoption(board):
 
-while one_option == True:
+    """
+        This function takes in a sudokuboard. Finds the possible entries
+        at each point in the board. Fills in those points with only one
+        possibility. Repeats the check and fill until the board is full or
+        the solver must fork into branches of choices.
 
-    # Index over rows
-    for i in range(0,9):
+    """
 
-        # Index over columns
-        for j in range(0,9):
+    # This Boolean is true while there are points with precisely one option.
+    one_option = True
 
-            if len(array_allowed_entries[i][j]) == 1:
-                sudokuboard[i][j] = array_allowed_entries[i][j][0]
-            else:
-                pass
+    # This is the array of allowed entries at each point of the board.
+    array_allowed_entries = sudoku_array_allowed(board)
 
-    # Is it still true that there is only one option?
+    # This while loop does the checking and filling.
+    while one_option == True:
 
-    # Recalculate the allowed entries on the new board
-    array_allowed_entries = sudoku_array_allowed(sudokuboard)
+        # Index over rows
+        for i in range(0,9):
 
-    length_one = 0
+            # Index over columns
+            for j in range(0,9):
 
-    for i in range(0,9):
-        for j in range(0,9):
-            if len(array_allowed_entries[i][j]) == 1:
-                length_one = 1
-            else:
-                pass
+                # This if statement fills the points with one possible entry.
+                if len(array_allowed_entries[i][j]) == 1:
+                    board[i][j] = array_allowed_entries[i][j][0]
+                else:
+                    pass
 
-    if length_one == 1:
-        pass
-    else:
-        one_option = False
+        # Is it still true that there is only one option?
+        # Recalculate the allowed entries on the new board.
+        array_allowed_entries = sudoku_array_allowed(board)
+
+        # After rechecking the board, we look for points with one possible
+        # entry.
+        length_one = 0
+        for i in range(0,9):
+            for j in range(0,9):
+                if len(array_allowed_entries[i][j]) == 1:
+                    length_one = 1
+                else:
+                    pass
+
+        # If there are none, then we use the Boolean to exit the while loop.
+        # Else, we go through the loop again.
+        if length_one == 1:
+            pass
+        else:
+            one_option = False
+
+    # Print the sudokuboard. Return empty string to avoid the "none"
+    print print_sudoku(board)
+    return ' '
 
 stop = timeit.default_timer()
-print "\n Abracadabra \n"
-
-print print_sudoku(sudokuboard)
+print sudoku_oneoption(sudokuboard)
 print 'Time: ', stop - start, 'seconds'
+
 # Conceivably, this could solve the sudoku. However, in general, this will not
 # be enough to fill the board completely. We will require some branching
 # procedure to follow different choices until an error occurs.
