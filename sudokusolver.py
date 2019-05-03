@@ -177,8 +177,26 @@ def sudokucheck(board): # board is a list of lists each with nine entries
                                 pass
 
         #print "True"
-        return True 
-  
+        return True
+
+# The following function will be determine whether or not the board
+# is complete.
+def sudoku_complete(board):
+
+    # Search through rows
+    for i in range(0,9):
+        for j in range(0,9):
+
+            if board[i][j] == '.':
+                return False
+            else:
+                pass
+
+    if sudokucheck(board) == True:
+        return True
+    else:
+        return False
+
 # This code prints the board in a terminal-friendly fashion
 def print_sudoku(board):
 
@@ -207,17 +225,17 @@ def print_sudoku(board):
 # The following boards can be solved without branching.
 #
 
-# row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
-# row2 = ['6', '.', '.',    '1', '9', '5',    '.', '.', '.']
-# row3 = ['.', '9', '8',    '.', '.', '.',    '.', '6', '.']
-#
-# row4 = ['8', '.', '.',    '.', '6', '.',    '.', '.', '3']
-# row5 = ['4', '.', '.',    '8', '.', '3',    '.', '.', '1']
-# row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
-#
-# row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
-# row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
-# row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
+row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
+row2 = ['6', '.', '.',    '1', '9', '5',    '.', '.', '.']
+row3 = ['.', '9', '8',    '.', '.', '.',    '.', '6', '.']
+
+row4 = ['8', '.', '.',    '.', '6', '.',    '.', '.', '3']
+row5 = ['4', '.', '.',    '8', '.', '3',    '.', '.', '1']
+row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
+
+row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
+row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
+row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
 
 # row1 = ['3', '2', '8',    '.', '7', '.',    '.', '1', '5']
 # row2 = ['.', '7', '6',    '.', '.', '.',    '8', '9', '3']
@@ -238,17 +256,17 @@ def print_sudoku(board):
 
 # "Medium" sudoku puzzle.
 
-row1 = ['.', '.', '.',    '.', '.', '8',    '.', '3', '.']
-row2 = ['.', '.', '.',    '.', '.', '.',    '4', '.', '5']
-row3 = ['.', '.', '1',    '.', '.', '.',    '.', '7', '.']
-
-row4 = ['7', '3', '.',    '.', '.', '.',    '2', '8', '.']
-row5 = ['9', '5', '.',    '3', '.', '.',    '.', '.', '.']
-row6 = ['.', '.', '.',    '.', '.', '6',    '.', '.', '4']
-
-row7 = ['8', '.', '.',    '1', '4', '.',    '.', '.', '.']
-row8 = ['.', '.', '.',    '8', '7', '.',    '.', '1', '6']
-row9 = ['.', '.', '5',    '.', '.', '.',    '9', '.', '.']
+# row1 = ['.', '.', '.',    '.', '.', '8',    '.', '3', '.']
+# row2 = ['.', '.', '.',    '.', '.', '.',    '4', '.', '5']
+# row3 = ['.', '.', '1',    '.', '.', '.',    '.', '7', '.']
+#
+# row4 = ['7', '3', '.',    '.', '.', '.',    '2', '8', '.']
+# row5 = ['9', '5', '.',    '3', '.', '.',    '.', '.', '.']
+# row6 = ['.', '.', '.',    '.', '.', '6',    '.', '.', '4']
+#
+# row7 = ['8', '.', '.',    '1', '4', '.',    '.', '.', '.']
+# row8 = ['.', '.', '.',    '8', '7', '.',    '.', '1', '6']
+# row9 = ['.', '.', '5',    '.', '.', '.',    '9', '.', '.']
 
 # "Hard" sudoku puzzle.
 
@@ -373,8 +391,7 @@ def sudoku_array_allowed(board):
 # As a first pass we fill in all entries with only one possible
 # option. Run the sudoku_array_allowed function on the new board. Repeating
 # this until we have to make a choice about which element to put in a square.
-# This procedure is packaged in the next function. 
-
+# This procedure is packaged in the next function.
 def sudoku_oneoption(board):
 
     """
@@ -428,12 +445,20 @@ def sudoku_oneoption(board):
             one_option = False
 
     # Print the sudokuboard. Return empty string to avoid the "none"
-    print print_sudoku(board)
-    return ' '
+    #print print_sudoku(board)
+    return None
 
+# This does the work. 
+sudoku_oneoption(sudokuboard)
 stop = timeit.default_timer()
-print sudoku_oneoption(sudokuboard)
-print 'Time: ', stop - start, 'seconds'
+
+if sudoku_complete(sudokuboard):
+    print 'This board has been solved.'
+    print_sudoku(sudokuboard)
+    print 'Time: ', stop - start, 'seconds'
+else:
+    print 'More work needs to be done to complete this board.'
+
 
 # Conceivably, this could solve the sudoku. However, in general, this will not
 # be enough to fill the board completely. We will require some branching
