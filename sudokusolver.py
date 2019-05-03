@@ -461,9 +461,8 @@ if sudokucheck(sudokuboard) == False:
 else:
     pass
 
-# Next we obtain the list of allowed entries at EACH point in the table. This
-# will be a sublist (at each point) of initial_row_missing, as some of
-# those values may return invalid boards.
+# This function will allow us to find the possible entries for each point
+# of the sudokuboard.
 def sudoku_array_allowed(board):
 
     """
@@ -545,11 +544,10 @@ def sudoku_array_allowed(board):
 
     return array_allowed_entries
 
-#array_allowed_entries = sudoku_array_allowed(sudokuboard)
-
-# As a first pass we might try and fill in all entries with only one possible
+# As a first pass we fill in all entries with only one possible
 # option. Run the sudoku_array_allowed function on the new board. Repeating
 # this until we have to make a choice about which element to put in a square.
+# This procedure is packaged in the next function. 
 
 def sudoku_oneoption(board):
 
