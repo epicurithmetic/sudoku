@@ -4,6 +4,12 @@ import timeit
 # This code will require the sudoku checker function
 def sudokucheck(board): # board is a list of lists each with nine entries
 
+    """
+        This function checks whether a board is valid. Not necessarily
+        complete, but that the rules have not yet been broken.
+
+    """
+
     # First we have the function check whether the rows are valid.
     for row in board:
 
@@ -182,6 +188,11 @@ def sudokucheck(board): # board is a list of lists each with nine entries
 # The following function will be determine whether or not the board
 # is complete.
 def sudoku_complete(board):
+    """
+        This function returns a Boolean based on whether or not the
+        board is finished.
+
+    """
 
     # Search through rows
     for i in range(0,9):
@@ -192,10 +203,7 @@ def sudoku_complete(board):
             else:
                 pass
 
-    if sudokucheck(board) == True:
-        return True
-    else:
-        return False
+    return sudokucheck(board)
 
 # This code prints the board in a terminal-friendly fashion
 def print_sudoku(board):
@@ -254,6 +262,10 @@ def print_sudoku(board):
 # These boards require some branching of options to solve.
 #
 
+#
+# This medium board is solved by the tree solver.
+#
+
 # "Medium" sudoku puzzle.
 
 row1 = ['.', '.', '.',    '.', '.', '8',    '.', '3', '.']
@@ -268,19 +280,23 @@ row7 = ['8', '.', '.',    '1', '4', '.',    '.', '.', '.']
 row8 = ['.', '.', '.',    '8', '7', '.',    '.', '1', '6']
 row9 = ['.', '.', '5',    '.', '.', '.',    '9', '.', '.']
 
+#
+# So far, my branching does not solve this sudoku.
+#
+
 # "Hard" sudoku puzzle.
 
-# row1 = ['.', '7', '6',    '.', '.', '.',    '.', '3', '2']
-# row2 = ['2', '.', '8',    '.', '.', '5',    '.', '.', '.']
-# row3 = ['.', '.', '.',    '.', '.', '.',    '.', '.', '.']
+# row1 = ['.', '3', '.',    '9', '5', '.',    '8', '.', '.']
+# row2 = ['.', '.', '.',    '.', '.', '.',    '.', '9', '.']
+# row3 = ['9', '.', '.',    '8', '.', '6',    '.', '4', '.']
 #
-# row4 = ['.', '.', '.',    '7', '6', '.',    '.', '.', '9']
-# row5 = ['.', '8', '.',    '.', '4', '2',    '.', '6', '.']
-# row6 = ['.', '.', '7',    '.', '9', '.',    '.', '.', '3']
+# row4 = ['6', '8', '.',    '.', '3', '.',    '.', '.', '.']
+# row5 = ['.', '.', '7',    '.', '2', '.',    '3', '.', '.']
+# row6 = ['.', '.', '.',    '.', '7', '.',    '.', '5', '4']
 #
-# row7 = ['.', '2', '.',    '.', '.', '1',    '3', '7', '.']
-# row8 = ['.', '.', '.',    '.', '.', '.',    '.', '9', '1']
-# row9 = ['.', '4', '.',    '.', '7', '.',    '8', '.', '.']
+# row7 = ['.', '2', '.',    '5', '.', '4',    '.', '.', '7']
+# row8 = ['.', '5', '.',    '.', '.', '.',    '.', '.', '.']
+# row9 = ['.', '.', '4',    '.', '6', '7',    '.', '1', '.']
 
 # Defines the board the script will solve.
 sudokuboard = [row1,
@@ -294,10 +310,12 @@ sudokuboard = [row1,
                row9
                ]
 
+start = timeit.default_timer()
+
 # Print the board
 print print_sudoku(sudokuboard)
+print "This is the board to be solved."
 
-start = timeit.default_timer()
 # Before we get started, we should check whether the given board is valid.
 if sudokucheck(sudokuboard) == False:
     print "The board is not valid"
@@ -465,48 +483,34 @@ else:
 # be enough to fill the board completely. We will require some branching
 # procedure to follow different choices until an error occurs.
 
+# Find entry with minimum number of options to make.
 def sudoku_min_option(board):
 
+    """
+        This function returns the minimum number of options among all
+        the squares of the sudoku board.
+
+        For instance if a board has a square with only two options, while all
+        other squares have more than two options, then this function
+        will return 2.
+
+    """
     #Array of allowed entries
-        allow = sudoku_array_allowed(board)
-
-        all_zero = True
-        for x in allow:
-            if not (len(x) == 0):
-                all_zero = False
-            else:
-                pass
-
-        if all_zero == True:
-            return 0
-
-        # Local variable to find the entries with smallest options.
-        min_length = 9
-
-        # Row index
-        for i in range(0,9):
-            # Column index
-            for j in range(0,9):
-
-                # Update minimum length and the index of the entry with
-                # the minimun length.
-                if 0 < len(allow[i][j]) < min_length:
-                    min_length = len(allow[i][j])
-
-        return min_length
-
-def sudoku_iter(board):
-
-    # Array of allowed entries
     allow = sudoku_array_allowed(board)
 
-    # Local variables to find the entries with smallest options.
-    min_index_row = 0
-    min_index_col = 0
+    all_zero = True
+    for x in allow:
+        if not (len(x) == 0):
+            all_zero = False
+        else:
+            pass
+
+    if all_zero == True:
+        return 0
+
+    # Local variable to find the entries with smallest options.
     min_length = 9
 
-    # Now we find the entry with the smallest number of options.
-    next_entry = []
     # Row index
     for i in range(0,9):
         # Column index
@@ -516,31 +520,146 @@ def sudoku_iter(board):
             # the minimun length.
             if 0 < len(allow[i][j]) < min_length:
                 min_length = len(allow[i][j])
-                min_index_row = i
-                min_index_col = j
-                # Entry with lowest number of options.
-                next_entry = allow[min_index_row][min_index_col]
-                #print next_entry
 
-    # Loop the options at this entry.
-    for x in next_entry:
-        board[min_index_row][min_index_col] = x
-        print_sudoku(board)
-        if (sudoku_min_option(board) == 0 and (not sudoku_complete(board))):
-        # In this case we want to return the board at its previous
-        # iteration.
-            pass
+    return min_length
 
-        elif sudoku_complete(board):
-            return print_sudoku(board)
+#
+# Attempt at recursive solver. Don't know how to back-track. Does not work.
+#
+# def sudoku_iter(board):
+#
+#     # Array of allowed entries
+#     allow = sudoku_array_allowed(board)
+#
+#     # Local variables to find the entries with smallest options.
+#     min_index_row = 0
+#     min_index_col = 0
+#     min_length = 9
+#
+#     # Now we find the entry with the smallest number of options.
+#     next_entry = []
+#     # Row index
+#     for i in range(0,9):
+#         # Column index
+#         for j in range(0,9):
+#
+#             # Update minimum length and the index of the entry with
+#             # the minimun length.
+#             if 0 < len(allow[i][j]) < min_length:
+#                 min_length = len(allow[i][j])
+#                 min_index_row = i
+#                 min_index_col = j
+#                 # Entry with lowest number of options.
+#                 next_entry = allow[min_index_row][min_index_col]
+#                 #print next_entry
+#
+#     # Loop the options at this entry.
+#     for x in next_entry:
+#         board[min_index_row][min_index_col] = x
+#         print_sudoku(board)
+#         if (sudoku_min_option(board) == 0 and (not sudoku_complete(board))):
+#         # In this case we want to return the board at its previous
+#         # iteration.
+#             pass
+#
+#         elif sudoku_complete(board):
+#             return print_sudoku(board)
+#
+#         else:
+#             sudoku_iter(board)
 
-        else:
-            sudoku_iter(board)
+def sudoku_tree_solver(board):
 
+    """
+        Given a board, this function creates a list containing that board.
 
+        For each board (seed) in the list, this function updates the list by adjoining
+        new boards. These are obtained by taking the smallest options and making
+        all of them seperately. The seed is removed each time.
 
+        Each step updates the list with boards with valid entries.
 
+    """
+    tree = [board]
+    solved = False
+    solution = []
 
+    while solved == False:
 
+        # Remove any invalid boards.
+        for brd in tree:
+            if not sudokucheck(brd):
+                tree.remove(brd)
+            else:
+                pass
 
-print sudoku_iter(sudokuboard)
+        if len(tree) == 0:
+            print "Tree length zero; something went wrong."
+            exit()
+
+        for brd in tree:
+
+                # For each board in the tree. Find entry with smallest number
+                # of options. Append each of those options to the tree.
+                # Remove the board from the tree.
+
+                if sudoku_complete(brd):
+                    solved = True
+                    solution = brd
+
+                # Remove brd
+                tree.remove(brd)
+
+                # Array of allowed entries
+                allow = sudoku_array_allowed(brd)
+
+                # Local variables to find the entries with smallest options.
+                min_index_row = 0
+                min_index_col = 0
+                min_length = 9
+
+                # Now we find the entry with the smallest number of options.
+                next_entry = []
+                # Row index
+                for i in range(0,9):
+                    # Column index
+                    for j in range(0,9):
+
+                        # Update minimum length and the index of the entry with
+                        # the minimun length.
+                        if 0 < len(allow[i][j]) < min_length:
+                            min_length = len(allow[i][j])
+                            min_index_row = i
+                            min_index_col = j
+                            # Entry with lowest number of options.
+                            next_entry = allow[min_index_row][min_index_col]
+
+                # Problem with this implementation due to the way
+                # lists are stored in memory. Renaming lists does not
+                # create a new list.
+
+                # In order to solve this problem I must initialize
+                # as many lists as there are objects in next_entry.
+                # Each of which is different from brd only at the
+                # entry found above.
+
+                for x in next_entry:
+                    a = list(brd)
+                    a[min_index_row][min_index_col] = x
+                    tree.append(a)
+
+                    # print "Length of tree", len(tree)
+                    # #Print boards as we go to see what the code is doing
+                    # print '----- Tree -----'
+                    # for brd in tree:
+                    #     print_sudoku(brd)
+                    # print len(tree)
+                    # print '---------------- \n\n\n'
+
+    print "Done."
+    return print_sudoku(solution)
+
+start = timeit.default_timer()
+sudoku_tree_solver(sudokuboard)
+stop = timeit.default_timer()
+print 'Time: ', stop - start, 'seconds'
