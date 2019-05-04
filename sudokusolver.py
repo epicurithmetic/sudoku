@@ -225,17 +225,17 @@ def print_sudoku(board):
 # The following boards can be solved without branching.
 #
 
-row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
-row2 = ['6', '.', '.',    '1', '9', '5',    '.', '.', '.']
-row3 = ['.', '9', '8',    '.', '.', '.',    '.', '6', '.']
-
-row4 = ['8', '.', '.',    '.', '6', '.',    '.', '.', '3']
-row5 = ['4', '.', '.',    '8', '.', '3',    '.', '.', '1']
-row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
-
-row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
-row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
-row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
+# row1 = ['5', '3', '.',    '.', '7', '.',    '.', '.', '.']
+# row2 = ['6', '.', '.',    '1', '9', '5',    '.', '.', '.']
+# row3 = ['.', '9', '8',    '.', '.', '.',    '.', '6', '.']
+#
+# row4 = ['8', '.', '.',    '.', '6', '.',    '.', '.', '3']
+# row5 = ['4', '.', '.',    '8', '.', '3',    '.', '.', '1']
+# row6 = ['7', '.', '.',    '.', '2', '.',    '.', '.', '6']
+#
+# row7 = ['.', '6', '.',    '.', '.', '.',    '2', '8', '.']
+# row8 = ['.', '.', '.',    '4', '1', '9',    '.', '.', '5']
+# row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
 
 # row1 = ['3', '2', '8',    '.', '7', '.',    '.', '1', '5']
 # row2 = ['.', '7', '6',    '.', '.', '.',    '8', '9', '3']
@@ -256,17 +256,17 @@ row9 = ['.', '.', '.',    '.', '8', '.',    '.', '7', '9']
 
 # "Medium" sudoku puzzle.
 
-# row1 = ['.', '.', '.',    '.', '.', '8',    '.', '3', '.']
-# row2 = ['.', '.', '.',    '.', '.', '.',    '4', '.', '5']
-# row3 = ['.', '.', '1',    '.', '.', '.',    '.', '7', '.']
-#
-# row4 = ['7', '3', '.',    '.', '.', '.',    '2', '8', '.']
-# row5 = ['9', '5', '.',    '3', '.', '.',    '.', '.', '.']
-# row6 = ['.', '.', '.',    '.', '.', '6',    '.', '.', '4']
-#
-# row7 = ['8', '.', '.',    '1', '4', '.',    '.', '.', '.']
-# row8 = ['.', '.', '.',    '8', '7', '.',    '.', '1', '6']
-# row9 = ['.', '.', '5',    '.', '.', '.',    '9', '.', '.']
+row1 = ['.', '.', '.',    '.', '.', '8',    '.', '3', '.']
+row2 = ['.', '.', '.',    '.', '.', '.',    '4', '.', '5']
+row3 = ['.', '.', '1',    '.', '.', '.',    '.', '7', '.']
+
+row4 = ['7', '3', '.',    '.', '.', '.',    '2', '8', '.']
+row5 = ['9', '5', '.',    '3', '.', '.',    '.', '.', '.']
+row6 = ['.', '.', '.',    '.', '.', '6',    '.', '.', '4']
+
+row7 = ['8', '.', '.',    '1', '4', '.',    '.', '.', '.']
+row8 = ['.', '.', '.',    '8', '7', '.',    '.', '1', '6']
+row9 = ['.', '.', '5',    '.', '.', '.',    '9', '.', '.']
 
 # "Hard" sudoku puzzle.
 
@@ -448,18 +448,99 @@ def sudoku_oneoption(board):
     #print print_sudoku(board)
     return None
 
-# This does the work. 
+# This does the work.
 sudoku_oneoption(sudokuboard)
 stop = timeit.default_timer()
 
+# Print the work done so far.
 if sudoku_complete(sudokuboard):
     print 'This board has been solved.'
     print_sudoku(sudokuboard)
     print 'Time: ', stop - start, 'seconds'
 else:
+    print_sudoku(sudokuboard)
     print 'More work needs to be done to complete this board.'
-
 
 # Conceivably, this could solve the sudoku. However, in general, this will not
 # be enough to fill the board completely. We will require some branching
 # procedure to follow different choices until an error occurs.
+
+def sudoku_min_option(board):
+
+    #Array of allowed entries
+        allow = sudoku_array_allowed(board)
+
+        all_zero = True
+        for x in allow:
+            if not (len(x) == 0):
+                all_zero = False
+            else:
+                pass
+
+        if all_zero == True:
+            return 0
+
+        # Local variable to find the entries with smallest options.
+        min_length = 9
+
+        # Row index
+        for i in range(0,9):
+            # Column index
+            for j in range(0,9):
+
+                # Update minimum length and the index of the entry with
+                # the minimun length.
+                if 0 < len(allow[i][j]) < min_length:
+                    min_length = len(allow[i][j])
+
+        return min_length
+
+def sudoku_iter(board):
+
+    # Array of allowed entries
+    allow = sudoku_array_allowed(board)
+
+    # Local variables to find the entries with smallest options.
+    min_index_row = 0
+    min_index_col = 0
+    min_length = 9
+
+    # Now we find the entry with the smallest number of options.
+    next_entry = []
+    # Row index
+    for i in range(0,9):
+        # Column index
+        for j in range(0,9):
+
+            # Update minimum length and the index of the entry with
+            # the minimun length.
+            if 0 < len(allow[i][j]) < min_length:
+                min_length = len(allow[i][j])
+                min_index_row = i
+                min_index_col = j
+                # Entry with lowest number of options.
+                next_entry = allow[min_index_row][min_index_col]
+                #print next_entry
+
+    # Loop the options at this entry.
+    for x in next_entry:
+        board[min_index_row][min_index_col] = x
+        print_sudoku(board)
+        if (sudoku_min_option(board) == 0 and (not sudoku_complete(board))):
+        # In this case we want to return the board at its previous
+        # iteration.
+            pass
+
+        elif sudoku_complete(board):
+            return print_sudoku(board)
+
+        else:
+            sudoku_iter(board)
+
+
+
+
+
+
+
+print sudoku_iter(sudokuboard)
