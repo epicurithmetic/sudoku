@@ -650,8 +650,8 @@ def sudoku_tree_solver(board):
                     tree.append(a)
                 
                 # Feng Discussion: 
-                for x in next_entry: 
-                    new_board = copy(board)
+                for x in next_entry:
+                    new_board = copy.deepcopy(board)
                     new_board[min_index_row][min_index_col] = x
                     tree.append(new_board)
                 
