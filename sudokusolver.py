@@ -647,7 +647,19 @@ def sudoku_tree_solver(board):
                     a = list(brd)
                     a[min_index_row][min_index_col] = x
                     tree.append(a)
-
+                
+                # Feng Discussion: 
+                for x in next_entry: 
+                    new_board = copy(board)
+                    new_board[min_index_row][min_index_col] = x
+                    tree.append(new_board)
+                
+                # NOTE: Problem was not due to naming of lists. Since the names are local, they
+                #       do not matter. The problem was due to copying of lists. If lists have 
+                #       a number of "levels" --- lists within' lists --- then copying them the
+                #       the naive way only copies the "top level". Therefore, deepcopy is needed. 
+                
+                
                     # print "Length of tree", len(tree)
                     # #Print boards as we go to see what the code is doing
                     # print '----- Tree -----'
