@@ -1,4 +1,5 @@
 import timeit
+import copy
 # Goal: write a script that solves a given sudoku board.
 
 # This code will require the sudoku checker function
