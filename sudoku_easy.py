@@ -2,7 +2,7 @@
 from sudoku_aux import *
 
 
-# These are some Su Doku boards to test the code on.
+# These are some sudoku boards to test the code on.
 # This naive method simply fills in the entries with one option. Checks the
 # new board for entries with one option and fills those in. Repeating until
 # board has no entries with one option. This does not necessarily solve the

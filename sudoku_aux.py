@@ -448,8 +448,9 @@ def sudoku_tree_solver(board):
 
     while solved == False:
 
-        # print len(tree)
-        # print '\n'
+        print '... Still Thinking ...'
+        print len(tree)
+        print '\n'
         #
         # if len(tree) > max_len:
         #     max_len = len(tree)

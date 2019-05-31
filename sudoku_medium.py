@@ -54,11 +54,9 @@ import timeit
 # it the hardest sudoku puzzle on earth...
 
 # Arto Inkala, a mathematician from Finland, designed it to be extremly
-# difficult. On the normal rating scale puzzles are ranked easiest at 1 upto 5
-# as the hardest. This puzzle is an 11 on that scale...
-
-# So far, it has been too much for this code. It can over night and for some
-# reason the machine paused. I will try run this on a better machine.
+# difficult. On the normal scale sudoku are ranked easiest at 1 upto 5
+# as the hardest. This puzzle is an 11 on that scale... This code solved
+# Inkala's sudoku in 1hour and 10minutes.
 
 # row1 = ['8', '.', '.',    '.', '.', '.',    '.', '.', '.']
 # row2 = ['.', '.', '3',    '6', '.', '.',    '.', '.', '.']
@@ -71,6 +69,19 @@ import timeit
 # row7 = ['.', '.', '1',    '.', '.', '.',    '.', '6', '8']
 # row8 = ['.', '.', '8',    '5', '.', '.',    '.', '1', '.']
 # row9 = ['.', '9', '.',    '.', '.', '.',    '4', '.', '.']
+
+# After 1hour and 10minutes, the code returned...
+# row1 = ['8', '1', '2',    '7', '5', '3',    '6', '4', '9']
+# row2 = ['9', '4', '3',    '6', '8', '2',    '1', '7', '5']
+# row3 = ['6', '7', '5',    '4', '9', '1',    '2', '8', '3']
+#
+# row4 = ['1', '5', '4',    '2', '3', '7',    '8', '9', '6']
+# row5 = ['3', '6', '9',    '8', '4', '5',    '7', '2', '1']
+# row6 = ['2', '8', '7',    '1', '6', '9',    '5', '3', '4']
+#
+# row7 = ['5', '2', '1',    '9', '7', '4',    '3', '6', '8']
+# row8 = ['4', '3', '8',    '5', '2', '6',    '9', '1', '7']
+# row9 = ['7', '9', '6',    '3', '1', '8',    '4', '5', '2']
 
 # Defines the board the script will solve.
 sudokuboard = [row1,
@@ -103,7 +114,6 @@ print '\nThinking ... \n'
 start = timeit.default_timer()
 updated_board = sudoku_tree_solver(sudokuboard)
 stop = timeit.default_timer()
-
 
 if sudoku_complete(updated_board):
     print '... and Done.'
