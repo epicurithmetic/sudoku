@@ -14,6 +14,8 @@
 
 # This is a module used in one of the steps of the tree solver.
 import copy
+import os
+
 
 # This function checks if the board is valid.
 def sudokucheck(board): # board is a list of lists each with nine entries
@@ -441,16 +443,22 @@ def sudoku_tree_solver(board):
         Each step updates the list with boards with valid entries.
 
     """
+    # This is the tree of possible solutions updated throughout the loop.
     tree = [board]
     #max_len = 1
+
+    # Boolean to tell the loop to stop.
     solved = False
+
+    # The completed board. 
     solution = []
 
     while solved == False:
 
+        os.system("cls")
         print '... Still Thinking ...'
-        print len(tree)
-        print '\n'
+        print ' I am currently considering %s options' % len(tree)
+
         #
         # if len(tree) > max_len:
         #     max_len = len(tree)
@@ -471,15 +479,18 @@ def sudoku_tree_solver(board):
         #         pass
 
         # Remove any boards which are incomplete with 0 options.
-        for brd in tree:
-            if sudoku_min_option(brd) == 0:
-                tree.remove(brd)
-                print "Board removed because 0 options"
+        # NOTE: I think this is not used. The print instruction never
+        #       appears in the terminal.
+        # for brd in tree:
+        #     if sudoku_min_option(brd) == 0:
+        #         tree.remove(brd)
+        #         print "Board removed because 0 options"
 
         # If, for some reason, all boards are removed, then code should halt.
-        if len(tree) == 0:
-            print "Something has gone wrong. All trees have been removed."
-            exit()
+        # Note: Probably more redundancy here.
+        # if len(tree) == 0:
+        #     print "Something has gone wrong. All trees have been removed."
+        #     exit()
 
         for brd in tree:
 
@@ -502,7 +513,7 @@ def sudoku_tree_solver(board):
                 min_index_col = 0
                 min_length = 9
 
-                # Now we find the entry with the smallest number of options.
+                # Now we find the (an) entry with the smallest number of options.
                 next_entry = []
                 # Row index
                 for i in range(0,9):
