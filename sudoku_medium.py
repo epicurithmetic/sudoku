@@ -36,7 +36,7 @@ import timeit
 # row8 = ['.', '5', '.',    '.', '.', '.',    '.', '.', '.']
 # row9 = ['.', '.', '4',    '.', '6', '7',    '.', '1', '.']
 
-# This puzzle required 42 seconds to complete.
+# This puzzle required 42 seconds to complete. Now 22 seconds.
 # row1 = ['.', '4', '1',    '.', '.', '.',    '.', '.', '.']
 # row2 = ['.', '.', '8',    '1', '7', '.',    '.', '.', '3']
 # row3 = ['.', '.', '.',    '.', '3', '.',    '6', '.', '1']
@@ -56,7 +56,7 @@ import timeit
 # Arto Inkala, a mathematician from Finland, designed it to be extremly
 # difficult. On the normal scale sudoku are ranked easiest at 1 upto 5
 # as the hardest. This puzzle is an 11 on that scale... This code solved
-# Inkala's sudoku in 1hour and 10minutes.
+# Inkala's sudoku in 1hour and 10minutes. Redundancy removed, now 35 minutes.
 
 # row1 = ['8', '.', '.',    '.', '.', '.',    '.', '.', '.']
 # row2 = ['.', '.', '3',    '6', '.', '.',    '.', '.', '.']

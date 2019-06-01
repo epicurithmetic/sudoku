@@ -450,7 +450,7 @@ def sudoku_tree_solver(board):
     # Boolean to tell the loop to stop.
     solved = False
 
-    # The completed board. 
+    # The completed board.
     solution = []
 
     while solved == False:

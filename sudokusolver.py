@@ -1,6 +1,8 @@
-# Script solves sudoku puzzles.
+# Script solves sudoku puzzles. Longest time so far is ~30min.
 from sudoku_aux import *
 import timeit
+
+
 
 # Enter the sudoku puzzle to be solved in the grid below.
 row1 = ['8', '.', '.',    '.', '.', '.',    '.', '.', '.']
@@ -14,8 +16,6 @@ row6 = ['.', '.', '.',    '1', '.', '.',    '.', '3', '.']
 row7 = ['.', '.', '1',    '.', '.', '.',    '.', '6', '8']
 row8 = ['.', '.', '8',    '5', '.', '.',    '.', '1', '.']
 row9 = ['.', '9', '.',    '.', '.', '.',    '4', '.', '.']
-
-# Note: This bih is the hardest out there. Solved in 1hour 10minutes.
 
 # Defines the board the script will solve.
 sudokuboard = [row1,
