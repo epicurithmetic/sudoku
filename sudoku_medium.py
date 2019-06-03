@@ -57,6 +57,7 @@ import timeit
 # difficult. On the normal scale sudoku are ranked easiest at 1 upto 5
 # as the hardest. This puzzle is an 11 on that scale... This code solved
 # Inkala's sudoku in 1hour and 10minutes. Redundancy removed, now 35 minutes.
+# Faster machine does it in less than 15minutes.
 
 # row1 = ['8', '.', '.',    '.', '.', '.',    '.', '.', '.']
 # row2 = ['.', '.', '3',    '6', '.', '.',    '.', '.', '.']
@@ -70,7 +71,7 @@ import timeit
 # row8 = ['.', '.', '8',    '5', '.', '.',    '.', '1', '.']
 # row9 = ['.', '9', '.',    '.', '.', '.',    '4', '.', '.']
 
-# After 1hour and 10minutes, the code returned...
+# After 15minutes, the code returned...
 # row1 = ['8', '1', '2',    '7', '5', '3',    '6', '4', '9']
 # row2 = ['9', '4', '3',    '6', '8', '2',    '1', '7', '5']
 # row3 = ['6', '7', '5',    '4', '9', '1',    '2', '8', '3']
