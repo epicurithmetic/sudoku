@@ -429,8 +429,7 @@ def sudoku_min_option(board):
 
     return min_length
 
-# This is thr function which I will solve all Su Doku puzzles. However, at the
-# moment it can't get "hard" (or more difficult) puzzles.
+# This is the function which will solve all suoku puzzles. This takes, at most, about 15minutes to solve a puzzle. 
 def sudoku_tree_solver(board):
 
     """
