@@ -97,6 +97,19 @@ import timeit
 # row8 = ['.', '4', '.',    '.', '.', '.',    '.', '.', '7']
 # row9 = ['.', '.', '7',    '.', '.', '.',    '3', '.', '.']
 
+# AI Top Ten.
+
+# AI escargot: 1 minute 6 seconds. 
+# AI killer application: < 2 minutes.
+# AI lucky diamond: < 2 minutes. 
+# AI worm hole: 2 minutes 15 seconds. 
+# AI labyrinth: 3 minutes 20 seconds. 
+# AI cicles: < 2 minutes. 
+# AI squadron: < 2 minutes. 
+# AI honeypot: 6 minutes 20 seconds. 
+# AI tweezers: 3 minutes 30 seconds. 
+# AI broken brickL: 2 minutes 20 seconds.
+
 
 
 # Defines the board the script will solve.
