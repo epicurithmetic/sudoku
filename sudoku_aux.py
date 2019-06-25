@@ -385,8 +385,6 @@ def sudoku_oneoption(board):
         else:
             one_option = False
 
-    # Print the sudokuboard. Return empty string to avoid the "none"
-    #print print_sudoku(board)
     return None
 
 # Find entry with minimum number of options to make.
@@ -429,7 +427,7 @@ def sudoku_min_option(board):
 
     return min_length
 
-# This is the function which will solve all suoku puzzles. This takes, at most, about 15minutes to solve a puzzle. 
+# This is the function which will solve all suoku puzzles. This takes, at most, about 15minutes to solve a puzzle.
 def sudoku_tree_solver(board):
 
     """
@@ -453,43 +451,6 @@ def sudoku_tree_solver(board):
     solution = []
 
     while solved == False:
-
-        os.system("cls")
-        print '... Still Thinking ...'
-        print ' I am currently considering %s options' % len(tree)
-
-        #
-        # if len(tree) > max_len:
-        #     max_len = len(tree)
-        # else:
-        #     pass
-
-        # Remove any invalid boards.
-
-        # Note: I think this is redundant, due to the way the code adds elements
-        #       to the board. This code can't make an invalid board, as it
-        #       computes the allowed numbers and only enters them.
-
-        # for brd in tree:
-        #     if sudokucheck(brd) == False:
-        #         tree.remove(brd)
-        #         print "Board removed because invalid"
-        #     else:
-        #         pass
-
-        # Remove any boards which are incomplete with 0 options.
-        # NOTE: I think this is not used. The print instruction never
-        #       appears in the terminal.
-        # for brd in tree:
-        #     if sudoku_min_option(brd) == 0:
-        #         tree.remove(brd)
-        #         print "Board removed because 0 options"
-
-        # If, for some reason, all boards are removed, then code should halt.
-        # Note: Probably more redundancy here.
-        # if len(tree) == 0:
-        #     print "Something has gone wrong. All trees have been removed."
-        #     exit()
 
         for brd in tree:
 
@@ -528,38 +489,11 @@ def sudoku_tree_solver(board):
                             # Entry with lowest number of options.
                             next_entry = allow[min_index_row][min_index_col]
 
-                # Problem with this implementation due to the way
-                # lists are stored in memory. Renaming lists does not
-                # create a new list.
-
-                # In order to solve this problem I must initialize
-                # as many lists as there are objects in next_entry.
-                # Each of which is different from brd only at the
-                # entry found above.
-
-                # for x in next_entry:
-                #     a = list(brd)
-                #     a[min_index_row][min_index_col] = x
-                #     tree.append(a)
-
                 # Feng Discussion: Feng thinks deep-copy might fix code.
-
-                # We will now add the this many boards
-                #print "We will now add %d boards" % len(next_entry)
-                #print "We will add the elements in %s" % next_entry
-                #print "At the point (%s, %s)" % (min_index_row, min_index_col)
                 for x in next_entry:
-
+                    # Append a new board for each option in next_entry.
                     new_board = copy.deepcopy(brd)
                     new_board[min_index_row][min_index_col] = x
                     tree.append(new_board)
-
-                #print "Length of tree", len(tree)
-                #Print boards as we go to see what the code is doing
-                #print '----- Tree -----'
-                #for brd in tree:
-                    #print_sudoku(brd)
-                #print len(tree)
-                #print '---------------- \n\n\n'
 
     return solution
