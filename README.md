@@ -2,9 +2,9 @@
 
 #### Solver Explanation:
 
-This sudoku solver uses a tree search method in order to find the solution. However the algorithm *does not try every possibility in the tree* --- this would take forever. Instead, the solver first finds the numbers which can go into a given empty-entry and stores this in an array that is the same size as the board. 
+This sudoku solver uses a tree search method in order to find the solution. However the algorithm *does not try every possibility in the tree* --- this would take forever. Instead, the solver first finds the numbers which can go into a given empty-entry and stores this in an array that is the same shape as the board. 
 
-After finding the array of allowed entries, the solver takes the empty-entry with the smallest number of allowed numbers and stores a copy of the board with each of the allowed numbers in the position of the empty-entry in a list (this is the *tree*). At this point the solver runs the same process on each of these entries in the tree:
+After finding the array of allowed entries, the solver takes the empty-entry with the smallest list of allowed numbers and stores a copy of the board with each of the allowed numbers in the position of the empty-entry in a list (this is the *tree*). At this point the solver runs the same process on each of these entries in the tree:
 
 1. Find the array of allowed numbers
 2. Remove any incomplete boards for which the array of possibilities is empty.
