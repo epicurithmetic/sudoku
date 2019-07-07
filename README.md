@@ -16,7 +16,7 @@ At each iteration the solver removes boards from the previous round together wit
 
 #### What actually happens:
 
-When this solver runs, the tree often blows up to contain 1000s of possible entries at the peak. This means making all of the above checks on 1000s of boards. Unsuprisingly this means the code can be slow for any but the simplest Sudoku. Most run-of-the-mill newspaper sudoku are solved between 5 minutes < 10 minutes. However, there are difficult puzzles designed by Arto Inkala and Andrew Stuart which can take > 30 minutes to solve. 
+When this solver runs, the tree often blows up to contain 1000s of possible entries at the peak. This means making all of the above checks on 1000s of boards. Unsuprisingly this means the code can be slow for any but the simplest Sudoku. Most run-of-the-mill newspaper sudoku are solved in < 5 minutes. However, there are difficult puzzles designed by Arto Inkala and Andrew Stuart which can take > 30 minutes to solve. 
 
 #### Solver Alterations:
 
