@@ -1,6 +1,6 @@
-#### Sudoku Solver
+### Sudoku Solver
 
-###### Solver Explanation:
+##### Solver Explanation:
 
 This sudoku solver uses a tree search method in order to find the solution. However the algorithm *does not try every possibility in the tree* --- this would take forever. Instead, the solver first finds the numbers which can go into a given empty-entry and stores this in an array that is the same size as the board. 
 
@@ -14,11 +14,11 @@ After finding the array of allowed entries, the solver takes the empty-entry wit
 
 At each iteration the solver removes boards from the previous round together with any board whose array of possible entries is empty. Unless the reason it has no possible entries is because it is solved.
 
-###### What actually happens:
+##### What actually happens:
 
 When this solver runs, the tree often blows up to contain 1000s of possible entries at the peak. This means making all of the above checks on 1000s of boards. Unsuprisingly this means the code can be slow for any but the simplest Sudoku. Most run-of-the-mill newspaper sudoku are solved between 5 minutes < 10 minutes. However, there are difficult puzzles designed by Arto Inkala and Andrew Stuart which can take > 30 minutes to solve. 
 
-###### Solver Alterations:
+##### Solver Alterations:
 
 In order to make a faster solver I see two possibilities:
 
