@@ -385,7 +385,7 @@ def sudoku_oneoption(board):
         else:
             one_option = False
 
-    return None
+    return board
 
 # Find entry with minimum number of options to make.
 def sudoku_min_option(board):
@@ -447,17 +447,25 @@ def sudoku_tree_solver(board):
     # Boolean to tell the loop to stop.
     solved = False
 
+    # I will collect some data about the number size of the tree at the beginning of
+    # each loop.
+    tree_lengths = []
+
     # The completed board.
     solution = []
 
     while solved == False:
+
+        print len(tree)
+        tree_lengths.append(len(tree))
 
         for brd in tree:
 
                 # For each board in the tree. Find entry with smallest number
                 # of options. Append each of those options to the tree.
                 # Remove the board from the tree.
-
+                brd = sudoku_oneoption(brd)
+                
                 if sudoku_complete(brd):
                     solved = True
                     solution = brd
@@ -496,4 +504,85 @@ def sudoku_tree_solver(board):
                     new_board[min_index_row][min_index_col] = x
                     tree.append(new_board)
 
+
+
+    # Use the tree length data to create a plot of how the tree size
+    # changes throughout the algorithm.
+
     return solution
+
+
+
+row1 = ['.', '.', '.',    '.', '.', '8',    '.', '3', '.']
+row2 = ['.', '.', '.',    '.', '.', '.',    '4', '.', '5']
+row3 = ['.', '.', '1',    '.', '.', '.',    '.', '7', '.']
+
+row4 = ['7', '3', '.',    '.', '.', '.',    '2', '8', '.']
+row5 = ['9', '5', '.',    '3', '.', '.',    '.', '.', '.']
+row6 = ['.', '.', '.',    '.', '.', '6',    '.', '.', '4']
+
+row7 = ['8', '.', '.',    '1', '4', '.',    '.', '.', '.']
+row8 = ['.', '.', '.',    '8', '7', '.',    '.', '1', '6']
+row9 = ['.', '.', '5',    '.', '.', '.',    '9', '.', '.']
+
+sudokuboard = [ row1,
+                row2,
+                row3,
+                row4,
+                row5,
+                row6,
+                row7,
+                row8,
+                row9
+                ]
+
+print print_sudoku(sudokuboard)
+
+# Tree solver is slow. So let's try implment a backtracking algorithm.
+
+def find_empty(board):
+
+    for i in range(len(board)):
+        for j in range(len(board)):
+
+            if board[i][j]=='.':
+                return (i,j)        # Index of empty entry (row,col)
+    return False
+
+def sudoku_backtracking_solver(board):
+
+    # Find the first empty entry.
+    empty_entry = find_empty(board)
+
+    # If there are none, then we are done...
+    if empty_entry == False:
+        return True
+    else:
+        # Store the row and column index of empty entry.
+        row,col = empty_entry
+
+    # Now we need to fill the empty entry with possible entries.
+    for i in range(1,10):
+        board[row][col]=str(i)
+        if sudokucheck(board) == True:
+
+            # If the entry is valid, then we move onto the next one. (Recursion step)
+            if sudoku_backtracking_solver(board) == True:
+                return True
+
+            #board[row][col]='.'
+
+            #print print_sudoku(board)
+
+
+        else:
+            # If the entry is not volid, then we can try the next number.
+            board[row][col]='.'
+
+    # If after trying all options, we can't find an answer, then we must have
+    # made a mistake earlier. So we need to backtrack
+    return False
+
+print sudoku_backtracking_solver(sudokuboard)
+
+print print_sudoku(sudokuboard)
