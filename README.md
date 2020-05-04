@@ -1,6 +1,6 @@
 ### Sudoku Solver
 
-Sudoku is (from Wikipedia) a logic-based, combinatorial, number placement problem. It does not contain any arithmetic. Initially created by a puzzle designer in the US it was later adopted by puzzlers in Japan and took on the name everyone now knows. Sudoku is played on a 9x9 grid: each entry of the grid must be filled with one number between (incl.) 1-9 such that no (i) row (ii) column, or (iii) 3x3 sub-grid contains the a repeat of any number. 
+Sudoku is a logic-based, combinatorial, number placement problem. It does not require any arithmetic. Initially created by a puzzle designer in the US it was later adopted by puzzlers in Japan and took on the name everyone now knows. Sudoku is played on a 9x9 grid: each entry of the grid must be filled with one number between (incl.) 1-9 such that no (i) row (ii) column, or (iii) 3x3 sub-grid contains the a repeat of any number. 
 
 Not every problem has a unique solution: for example, the empty sudoku board has many solutions! However there are results which guarantee the existence and uniqueness of a solution based on the number of entries given at the start. 
 
