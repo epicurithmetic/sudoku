@@ -30,5 +30,6 @@ In order to make a faster solver I see two possibilities:
 - Use backtracking-recursion to explore the solution space more efficiently
 
 [Dream] Develop a UI which makes it easier for the user to enter the sudoku problem. The current method is cumbersome. 
+
 [Big Dream] To write image recognistion software which recognises a sudoku problem from a photo taken with a phone. An app for a phone which can take a picture of a sudoku board and return the solution. 
 
