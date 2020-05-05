@@ -1,0 +1,5 @@
+*.pyc
+*.txt
+sudoku_easy.py
+sudoku_medium.py
+sudoku.recursion.py
