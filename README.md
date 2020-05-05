@@ -1,5 +1,9 @@
 ### Sudoku Solver
 
+Sudoku is a logic-based, combinatorial, number placement problem. It does not require any arithmetic. Initially created by a puzzle designer in the US it was later adopted by puzzlers in Japan and took on the name everyone now knows. Sudoku is played on a 9x9 grid: each entry of the grid must be filled with one number between (incl.) 1-9 such that no (i) row (ii) column, or (iii) 3x3 sub-grid contains the a repeat of any number. 
+
+Not every problem has a unique solution: for example, the empty sudoku board has many solutions! However there are results which guarantee the existence and uniqueness of a solution based on the number of entries given at the start. 
+
 #### Solver Explanation:
 
 This sudoku solver uses a tree search method in order to find the solution. However the algorithm *does not try every possibility in the tree* --- this would take forever. Instead, the solver first finds the numbers which can go into a given empty-entry and stores this in an array that is the same shape as the board. 
@@ -24,4 +28,8 @@ In order to make a faster solver I see two possibilities:
 
 - Reduce the number of checks at each stage of the tree-search solver
 - Use backtracking-recursion to explore the solution space more efficiently
+
+[Dream] Develop a UI which makes it easier for the user to enter the sudoku problem. The current method is cumbersome. 
+
+[Big Dream] To write image recognition software which recognises a sudoku problem from a photo taken with a phone. An app for a phone which can take a picture of a sudoku board and return the solution. 
 
